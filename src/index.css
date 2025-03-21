@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+   /* Font */
+   --font-Inter: "Inter", sans-serif;
+
+   /* Colors */
+   --color-accent: hsl(144, 97, 27);
+   --color-accent-h: hsl(144, 97, 31); /* hover */
+   --color-accent-p: hsl(144, 97, 23); /* pressed */
+
+   /* Absolutes */
+   --color-gray-1: #fff;
+   --color-gray-12: #000;
+
+   /* Backgound */
+   --color-gray-2: #f7f7f9;
+
+   /* Separators */
+   --color-gray-4: #e4e6ec; /* Separator 1 */
+   --color-gray-5: #e0e2ea; /* Separator 2 */
+
+   --color-gray-6: #797e8b; /* Secondary text 1 */
+   --color-gray-7: #c7c9d1; /* Solid border */
+   --color-gray-8: #666c7b; /* Secondary text 2 */
+
+   --color-gray-11: #363a43; /* Solid text */
+
+   /* Breakpoints */
+   --breakpoint-xs: 452px;
+   --breakpoint-md: 1000px;
+}
+
+html,
+body,
+#root {
+   height: 100%;
+}
+
+#root {
+   font-family: "Inter", sans-serif;
+   display: flex;
+   flex-direction: column;
+}
+
+#root > main {
+   flex-grow: 1;
+}

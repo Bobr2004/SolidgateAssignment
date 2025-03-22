@@ -121,7 +121,7 @@ InputField.CardDate = function ({ setState }: HookFormInputProps) {
                      return;
                   setCardDateDisplay(
                      value.length > 2
-                        ? `${value.slice(0, 2)}///${value.slice(2)}`
+                        ? `${value.slice(0, 2)} / ${value.slice(2)}`
                         : value
                   );
                }}

@@ -1,7 +1,5 @@
 import { PropsWithChildren } from "react";
 
-type ButtonProps = {};
-
 function Button() {
    return <button></button>;
 }

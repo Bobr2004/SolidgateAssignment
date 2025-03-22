@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import InfoSVG from "../assets/Info.svg";
+import clsx from "clsx";
 
 function InputField() {
    return <input type="text" />;
 }
 
-import InfoSVG from "../assets/Info.svg";
-import clsx from "clsx";
+type HookFormInputProps = {
+   setState: (val: string) => void;
+};
 
 const isValidNumber = (str: string) => /^\d+$/.test(str);
 
@@ -21,7 +25,7 @@ const unformatCardNumber = (formattedValue: string) => {
    return formattedValue.replace(/\D/g, "");
 };
 
-InputField.CardNumber = function () {
+InputField.CardNumber = function ({ setState }: HookFormInputProps) {
    const [cardNumberDisplay, setCardNumberDispay] = useState("");
    const cardNumber = unformatCardNumber(cardNumberDisplay);
    const cardNumberSyllables = [
@@ -30,6 +34,10 @@ InputField.CardNumber = function () {
       cardNumber.slice(8, 12),
       cardNumber.slice(12)
    ];
+
+   useEffect(() => {
+      setState(cardNumber);
+   }, [cardNumber]);
 
    const zeroesPad = "0".repeat(16 - cardNumber.length);
 
@@ -87,11 +95,15 @@ InputField.CardNumber = function () {
       </label>
    );
 };
-InputField.CardDate = function () {
+InputField.CardDate = function ({ setState }: HookFormInputProps) {
    const [cardDateDisplay, setCardDateDisplay] = useState("");
    const cardDate = cardDateDisplay.replace(/\D/g, "").slice(0, 4);
 
    const formattedDate = [cardDate.slice(0, 2), cardDate.slice(2, 4)];
+
+   useEffect(() => {
+      setState(cardDate);
+   }, [cardDate]);
 
    const datePadSyllables = [
       "MM".slice(cardDate.length),
@@ -144,9 +156,14 @@ InputField.CardDate = function () {
       </label>
    );
 };
-InputField.CardCVC = function () {
-   const [cardCVCDisplay, setCardCVCDisplay] = useState("");
-   const cardCVC = cardCVCDisplay.replace(/\D/g, "").slice(0, 3);
+InputField.CardCVC = function ({ setState }: HookFormInputProps) {
+   const [cardCVC, setCardCVC] = useState("");
+   const cardCVCDisplay = "•".repeat(cardCVC.length);
+
+   useEffect(() => {
+      setState(cardCVC);
+      console.log(cardCVC);
+   }, [cardCVC]);
 
    const zeroesPad = "•••".slice(cardCVC.length);
 
@@ -157,13 +174,13 @@ InputField.CardCVC = function () {
             <input
                onChange={({ target }) => {
                   const value = target.value.replace(/\D/g, "").slice(0, 3);
-                  setCardCVCDisplay(value);
+                  setCardCVC(value);
                }}
                type="text"
                className="border-gray-7 border-1 rounded-md outline-gray-6 outline-0 text-transparent caret-gray-8
                w-full py-2.5 px-3 text-base transition
                focus:border-gray-6 focus:outline-[0.5px]"
-               value={cardCVCDisplay}
+               value={cardCVC}
                style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}
             />
             <div
@@ -171,7 +188,7 @@ InputField.CardCVC = function () {
                style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}
             >
                <div>
-                  <span>{cardCVC}</span>
+                  <span>{cardCVCDisplay}</span>
                   <span className="text-gray-7">{zeroesPad}</span>
                </div>
                <div>

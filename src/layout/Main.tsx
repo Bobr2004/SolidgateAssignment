@@ -55,9 +55,16 @@ function Main() {
                )}
             >
                <h2 className="md:mb-2 text-lg font-semibold">
-                  Order info {"<="} 100 char.
+                  Wireless earbuds with noise canceling & long battery (56
+                  characters)
                </h2>
-               <p>Description {"<="} 400 char.</p>
+               <p>
+                  Enjoy premium sound with our wireless earbuds. Featuring noise
+                  cancellation, long battery life, and a comfortable fit,
+                  they’re perfect for work, travel, and workouts. Seamless
+                  Bluetooth ensures uninterrupted listening anywhere. (230
+                  characters)
+               </p>
                <Separator />
                <p className="flex flex-col">
                   <span className="text-sm">

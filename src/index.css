@@ -7,9 +7,9 @@
    --font-Inter: "Inter", sans-serif;
 
    /* Colors */
-   --color-accent: hsl(144, 97, 27);
-   --color-accent-h: hsl(144, 97, 31); /* hover */
-   --color-accent-p: hsl(144, 97, 23); /* pressed */
+   --color-accent: hsl(144, 97%, 27%);
+   --color-accent-h: hsl(144, 97%, 31%); /* hover */
+   --color-accent-p: hsl(144, 97%, 23%); /* pressed */
 
    /* Absolutes */
    --color-gray-1: #fff;
@@ -18,7 +18,6 @@
    /* Backgound */
    --color-gray-2: #f7f7f9;
 
-   /* Separators */
    --color-gray-4: #e4e6ec; /* Separator 1 */
    --color-gray-5: #e0e2ea; /* Separator 2 */
 
@@ -41,10 +40,22 @@ body,
 
 #root {
    font-family: "Inter", sans-serif;
+   color: #363a43;
    display: flex;
    flex-direction: column;
 }
 
 #root > main {
    flex-grow: 1;
+}
+
+/* Typography */
+b {
+   font-weight: 600;
+}
+
+/* Styles */
+
+.monospace-gap {
+   gap: calc(1ch + 0.05em);
 }

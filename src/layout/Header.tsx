@@ -5,21 +5,19 @@ import VectorSVG from "../assets/Vector.svg";
 type Language = "UKR" | "ENG";
 
 function Header() {
-   const [selectedLanguage, setSelectedLanguage] = useState<Language>("ENG");
+   const [language, setLanguage] = useState<Language>("ENG");
    return (
       <header>
          <div className="max-w-[852px] mx-auto hidden md:flex justify-end p-2 gap-4">
             <LanguageTab
                title="Eng"
                value="ENG"
-               isSelected={selectedLanguage === "ENG"}
-               setLanguage={setSelectedLanguage}
+               {...{ language, setLanguage }}
             />
             <LanguageTab
                title="Укр"
                value="UKR"
-               isSelected={selectedLanguage === "UKR"}
-               setLanguage={setSelectedLanguage}
+               {...{ language, setLanguage }}
             />
          </div>
          <div className="absolute w-full flex justify-between top-6 px-6 left-0 md:hidden">
@@ -27,10 +25,9 @@ function Header() {
                <img src={VectorSVG} alt="<-" />
             </div>
             <LanguageTab
-               title={selectedLanguage === "UKR" ? "Eng" : "Укр"}
-               value={selectedLanguage === "UKR" ? "ENG" : "UKR"}
-               isSelected={false}
-               setLanguage={setSelectedLanguage}
+               title={language === "UKR" ? "Eng" : "Укр"}
+               value={language === "UKR" ? "ENG" : "UKR"}
+               {...{ language, setLanguage }}
             />
          </div>
       </header>
@@ -40,21 +37,21 @@ function Header() {
 type LanguageTabProps = {
    title: string;
    value: Language;
-   isSelected: boolean;
+   language: Language;
    setLanguage: (languageVal: Language) => void;
 };
 
 function LanguageTab({
    title,
    value,
-   isSelected,
+   language,
    setLanguage
 }: LanguageTabProps) {
    return (
       <button
-         disabled={isSelected}
+         disabled={language === value}
          className={clsx("transition cursor-pointer", {
-            "!text-[#B0B4BE] !cursor-not-allowed": isSelected
+            "!text-[#B0B4BE] !cursor-not-allowed": language === value
          })}
          onClick={() => {
             setLanguage(value);

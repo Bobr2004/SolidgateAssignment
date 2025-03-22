@@ -8,7 +8,7 @@ import { Form } from "./Form";
 
 function Main() {
    return (
-      <main className="flex  flex-col items-center md:items-start md:flex-row md:justify-center px-4 gap-8">
+      <main className="flex flex-col items-center md:items-start md:flex-row md:justify-center px-4 gap-8">
          <section className="max-w-[420px] w-full md:grow">
             <div className="mt-5 md:mt-0 flex flex-col items-center md:items-start">
                <h2 className="font-semibold text-lg relative">
@@ -81,5 +81,6 @@ function Main() {
       </main>
    );
 }
+
 
 export { Main };

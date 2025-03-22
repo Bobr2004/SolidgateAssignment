@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 
 import InfoSVG from "../assets/Info.svg";
 import clsx from "clsx";
+import {
+   splitCardNumber,
+   formatCardNumber,
+   isValidNumber,
+   unformatCardNumber
+} from "../global/functions";
 
 function InputField() {
    return <input type="text" />;
@@ -11,29 +17,11 @@ type HookFormInputProps = {
    setState: (val: string) => void;
 };
 
-const isValidNumber = (str: string) => /^\d+$/.test(str);
-
-const formatCardNumber = (value: string) => {
-   const digitsOnly = value.replace(/\D/g, "");
-
-   const truncated = digitsOnly.slice(0, 16);
-
-   return truncated.replace(/(\d{4})/g, "$1 ").trim();
-};
-
-const unformatCardNumber = (formattedValue: string) => {
-   return formattedValue.replace(/\D/g, "");
-};
-
+// Card Number
 InputField.CardNumber = function ({ setState }: HookFormInputProps) {
    const [cardNumberDisplay, setCardNumberDispay] = useState("");
    const cardNumber = unformatCardNumber(cardNumberDisplay);
-   const cardNumberSyllables = [
-      cardNumber.slice(0, 4),
-      cardNumber.slice(4, 8),
-      cardNumber.slice(8, 12),
-      cardNumber.slice(12)
-   ];
+   const cardNumberParts = splitCardNumber(cardNumber);
 
    useEffect(() => {
       setState(cardNumber);
@@ -41,12 +29,7 @@ InputField.CardNumber = function ({ setState }: HookFormInputProps) {
 
    const zeroesPad = "0".repeat(16 - cardNumber.length);
 
-   const zeroesPadSyllables = [
-      zeroesPad.slice(0, 4),
-      zeroesPad.slice(4, 8),
-      zeroesPad.slice(8, 12),
-      zeroesPad.slice(12)
-   ];
+   const zeroesPadParts = splitCardNumber(zeroesPad);
 
    return (
       <label className="flex flex-col gap-1">
@@ -63,38 +46,25 @@ InputField.CardNumber = function ({ setState }: HookFormInputProps) {
                   setCardNumberDispay(formatCardNumber(target.value));
                }}
                type="text"
-               className="border-gray-7 border-1 rounded-md outline-gray-6 outline-0 text-transparent caret-gray-8
-               w-full py-2.5 px-3
-               text-base transition
-             focus:border-gray-6 focus:outline-[0.5px]"
+               className="input-field mono"
                value={cardNumberDisplay}
-               style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}
             />
-            <div
-               className="py-2.5 px-3 absolute top-px left-px cursor-text flex monospace-gap text-base"
-               style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}
-            >
-               <div>
-                  <span>{cardNumberSyllables[0]}</span>
-                  <span className="text-gray-7">{zeroesPadSyllables[3]}</span>
-               </div>
-               <div>
-                  <span>{cardNumberSyllables[1]}</span>
-                  <span className="text-gray-7">{zeroesPadSyllables[2]}</span>
-               </div>
-               <div>
-                  <span>{cardNumberSyllables[2]}</span>
-                  <span className="text-gray-7">{zeroesPadSyllables[1]}</span>
-               </div>
-               <div>
-                  <span>{cardNumberSyllables[3]}</span>
-                  <span className="text-gray-7">{zeroesPadSyllables[0]}</span>
-               </div>
+            <div className="input-value mono gap-mono">
+               {cardNumberParts.map((_, i) => (
+                  <div>
+                     <span>{cardNumberParts[i]}</span>
+                     <span className="text-gray-7">
+                        {zeroesPadParts[3 - i]}
+                     </span>
+                  </div>
+               ))}
             </div>
          </div>
       </label>
    );
 };
+
+// Card Expiration Date
 InputField.CardDate = function ({ setState }: HookFormInputProps) {
    const [cardDateDisplay, setCardDateDisplay] = useState("");
    const cardDate = cardDateDisplay.replace(/\D/g, "").slice(0, 4);
@@ -126,16 +96,10 @@ InputField.CardDate = function ({ setState }: HookFormInputProps) {
                   );
                }}
                type="text"
-               className="border-gray-7 border-1 rounded-md outline-gray-6 outline-0 text-transparent caret-gray-8
-               w-full py-2.5 px-3 text-base transition
-               focus:border-gray-6 focus:outline-[0.5px]"
+               className="input-field mono"
                value={cardDateDisplay}
-               style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}
             />
-            <div
-               className="py-2.5 px-3 absolute top-px left-px cursor-text flex monospace-gap text-base"
-               style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}
-            >
+            <div className="input-value mono gap-mono">
                <div>
                   <span>{formattedDate[0]}</span>
                   <span className="text-gray-7">{datePadSyllables[0]}</span>
@@ -156,6 +120,8 @@ InputField.CardDate = function ({ setState }: HookFormInputProps) {
       </label>
    );
 };
+
+// Card CVC
 InputField.CardCVC = function ({ setState }: HookFormInputProps) {
    const [cardCVC, setCardCVC] = useState("");
    const cardCVCDisplay = "•".repeat(cardCVC.length);
@@ -177,16 +143,10 @@ InputField.CardCVC = function ({ setState }: HookFormInputProps) {
                   setCardCVC(value);
                }}
                type="text"
-               className="border-gray-7 border-1 rounded-md outline-gray-6 outline-0 text-transparent caret-gray-8
-               w-full py-2.5 px-3 text-base transition
-               focus:border-gray-6 focus:outline-[0.5px]"
+               className="input-field mono"
                value={cardCVC}
-               style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}
             />
-            <div
-               className="py-2.5 px-3 absolute top-px left-px cursor-text flex text-base justify-between w-full items-center"
-               style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}
-            >
+            <div className="input-value mono justify-between items-center">
                <div>
                   <span>{cardCVCDisplay}</span>
                   <span className="text-gray-7">{zeroesPad}</span>

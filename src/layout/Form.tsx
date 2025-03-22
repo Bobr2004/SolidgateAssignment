@@ -6,9 +6,7 @@ import { Button } from "../components/Button";
 import toast from "react-hot-toast";
 
 import LoaderSVG from "../assets/Loader.svg";
-
-const wait = (seconds: number) =>
-   new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+import { wait } from "../global/functions";
 
 const cardSchema = z.object({
    cardNumber: z.string().regex(/^\d{16}$/, "Card number must be 16 digits"),

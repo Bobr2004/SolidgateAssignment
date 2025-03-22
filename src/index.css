@@ -54,8 +54,25 @@ b {
    font-weight: 600;
 }
 
+/* Tailwind shortcuts */
+.input-field {
+   @apply border-gray-7 border-1 rounded-md outline-gray-6 outline-0 text-transparent caret-gray-8 
+   w-full py-2.5 px-3
+   text-base transition
+ focus:border-gray-6 focus:outline-[0.5px];
+}
+
+.input-value {
+   @apply py-2.5 px-3 absolute top-px left-px cursor-text flex text-base w-full;
+}
+
 /* Styles */
 
-.monospace-gap {
+.gap-mono {
    gap: calc(1ch + 0.05em);
+}
+
+.mono {
+   font-family: monospace;
+   letter-spacing: 0.05em;
 }

@@ -6,13 +6,15 @@ function Button() {
 
 Button.Accent = function ({ children }: PropsWithChildren) {
    return (
-      <button
-         className="w-full py-3 px-4 text-center font-semibold rounded-md cursor-pointer
-         transition relative hover:top-[-2px] active:top-[4px]
+      <div className="group">
+         <button
+            className="w-full py-3 px-4 text-center font-semibold rounded-md cursor-pointer
+         transition relative group-hover:top-[-2px] active:top-[4px]
        text-gray-1 bg-accent hover:bg-accent-h active:bg-accent-p"
-      >
-         {children}
-      </button>
+         >
+            {children}
+         </button>
+      </div>
    );
 };
 

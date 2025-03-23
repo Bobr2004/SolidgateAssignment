@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
 import { z } from "zod";
 import { InputField } from "../components/InputField";
 import { Button } from "../components/Button";
@@ -46,31 +46,19 @@ function Form() {
 
    return (
       <form onSubmit={handleSubmit(onSubmit)}>
-         <div className="mt-4">
+         <fieldset>
             <InputField.CardNumber setState={setCardNumber} />
-            {errors.cardNumber && (
-               <small className="text-red-600">
-                  {errors.cardNumber.message}
-               </small>
-            )}
-         </div>
+            <ErrorMessage fieldError={errors.cardNumber} />
+         </fieldset>
          <div className="flex gap-2 mt-3">
-            <div>
+            <fieldset>
                <InputField.CardDate setState={setCardDate} />
-               {errors.cardDate && (
-                  <small className="text-red-600">
-                     {errors.cardDate.message}
-                  </small>
-               )}
-            </div>
-            <div>
+               <ErrorMessage fieldError={errors.cardDate} />
+            </fieldset>
+            <fieldset>
                <InputField.CardCVC setState={setCardCVC} />
-               {errors.cardCVC && (
-                  <small className="text-red-600">
-                     {errors.cardCVC.message}
-                  </small>
-               )}
-            </div>
+               <ErrorMessage fieldError={errors.cardCVC} />
+            </fieldset>
          </div>
          <div className="mt-4">
             <Button.Accent>
@@ -91,6 +79,12 @@ function Form() {
          </div>
       </form>
    );
+}
+
+function ErrorMessage({ fieldError }: { fieldError: FieldError | undefined }) {
+   if (fieldError)
+      return <small className="text-red-600">{fieldError.message}</small>;
+   return <></>;
 }
 
 export { Form };

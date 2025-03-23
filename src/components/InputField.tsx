@@ -21,7 +21,7 @@ type HookFormInputProps = {
 InputField.CardNumber = function ({ setState }: HookFormInputProps) {
    const [cardNumberDisplay, setCardNumberDispay] = useState("");
    const cardNumber = unformatCardNumber(cardNumberDisplay);
-   const cardNumberParts = splitCardNumber(cardNumber);
+   const cardNumberParts: string[] = splitCardNumber(cardNumber);
 
    useEffect(() => {
       setState(cardNumber);
@@ -29,10 +29,10 @@ InputField.CardNumber = function ({ setState }: HookFormInputProps) {
 
    const zeroesPad = "0".repeat(16 - cardNumber.length);
 
-   const zeroesPadParts = splitCardNumber(zeroesPad);
+   const zeroesPadParts: string[] = splitCardNumber(zeroesPad);
 
    return (
-      <label className="flex flex-col gap-1">
+      <label className="flex flex-col gap-1 space-y-1">
          <small className="text-xs text-gray-8">Card Number</small>
          <div className="relative">
             <input
@@ -46,10 +46,12 @@ InputField.CardNumber = function ({ setState }: HookFormInputProps) {
                   setCardNumberDispay(formatCardNumber(target.value));
                }}
                type="text"
-               className="input-field mono"
+               className="input-field mono" // default input value is transparent
                value={cardNumberDisplay}
             />
+            {/* Custom display value */}
             <div className="input-value mono gap-mono">
+               {/* 4 distinct parts */}
                {cardNumberParts.map((_, i) => (
                   <div>
                      <span>{cardNumberParts[i]}</span>
@@ -75,7 +77,7 @@ InputField.CardDate = function ({ setState }: HookFormInputProps) {
       setState(cardDate);
    }, [cardDate]);
 
-   const datePadSyllables = [
+   const datePadParts = [
       "MM".slice(cardDate.length),
       "YYYY".slice(cardDate.length).slice(0, 2)
    ];
@@ -96,13 +98,13 @@ InputField.CardDate = function ({ setState }: HookFormInputProps) {
                   );
                }}
                type="text"
-               className="input-field mono"
+               className="input-field mono" // default input value is transparent
                value={cardDateDisplay}
             />
             <div className="input-value mono gap-mono">
                <div>
                   <span>{formattedDate[0]}</span>
-                  <span className="text-gray-7">{datePadSyllables[0]}</span>
+                  <span className="text-gray-7">{datePadParts[0]}</span>
                </div>
                <span
                   className={clsx("text-gray-7", {
@@ -113,7 +115,7 @@ InputField.CardDate = function ({ setState }: HookFormInputProps) {
                </span>
                <div>
                   <span>{formattedDate[1]}</span>
-                  <span className="text-gray-7">{datePadSyllables[1]}</span>
+                  <span className="text-gray-7">{datePadParts[1]}</span>
                </div>
             </div>
          </div>
@@ -143,7 +145,7 @@ InputField.CardCVC = function ({ setState }: HookFormInputProps) {
                   setCardCVC(value);
                }}
                type="text"
-               className="input-field mono"
+               className="input-field mono" // default input value is transparent
                value={cardCVC}
             />
             <div className="input-value mono justify-between items-center">
